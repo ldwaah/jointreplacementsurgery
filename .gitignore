@@ -1,0 +1,8 @@
+.DS_Store
+.deploy-tools/
+node_modules/
+*.backup
+*.docx
+.env
+.env.*
+.netlify/

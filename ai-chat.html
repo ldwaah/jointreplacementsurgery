@@ -1,0 +1,711 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Assistant - Ms. (Dr.) Samantha Tross</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#005EB8',
+                        'primary-dark': '#003D82',
+                        'primary-light': '#0072CE'
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .insurer-section {
+            padding: 30px 15px;
+            text-align: center;
+        }
+        .insurer-text {
+            max-width: 800px;
+            margin: 0 auto 25px auto;
+            font-size: 1rem;
+            line-height: 1.5;
+        }
+        .logo-slider {
+            width: 100%;
+            overflow: hidden;
+            padding: 10px 0;
+        }
+        .logo-track {
+            display: flex;
+            align-items: center;
+            gap: 40px;
+            animation: logo-scroll 25s linear infinite;
+        }
+        .logo-track img {
+            height: 50px;
+            width: auto;
+            object-fit: contain;
+            opacity: 0.95;
+            transition: 0.25s ease;
+        }
+        .logo-track img:hover {
+            opacity: 1;
+            transform: scale(1.05);
+        }
+        @keyframes logo-scroll {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Header with Back Button -->
+    <div class="bg-primary text-white py-4">
+        <div class="max-w-4xl mx-auto px-4">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-3">
+                    <div class="w-10 h-10 bg-white/20 rounded-full flex items-center justify-center">
+                        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <h1 class="text-xl font-bold">Ms. (Dr.) Samantha Tross AI Assistant</h1>
+                        <p class="text-sm text-white/80">Your orthopaedic surgery questions answered</p>
+                    </div>
+                </div>
+                <a class='bg-white/20 hover:bg-white/30 text-white px-4 py-2 rounded-lg transition-colors flex items-center space-x-2' href='/'>
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
+                    </svg>
+                    <span>Back to Home</span>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Chat Container -->
+    <div class="max-w-4xl mx-auto px-4 py-6">
+        <div class="bg-white rounded-2xl shadow-lg overflow-hidden">
+            <!-- Chat Messages -->
+            <div id="chat-messages" class="h-96 overflow-y-auto p-6 space-y-4">
+                <!-- Welcome Message -->
+                <div class="flex items-start space-x-3">
+                    <div class="w-8 h-8 bg-primary/10 rounded-full flex items-center justify-center flex-shrink-0">
+                        <svg class="w-5 h-5 text-primary" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+                        </svg>
+                    </div>
+                    <div class="bg-gray-100 rounded-lg p-4 max-w-xs">
+                        <p class="text-sm text-gray-800" id="welcome-message">Loading...</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quick Questions -->
+            <div class="px-6 pb-4">
+                <p class="text-sm text-gray-600 mb-3">Quick questions:</p>
+                <div class="flex flex-wrap gap-2">
+                    <button onclick="askQuestion('How do I book a consultation?')" class="px-3 py-1 bg-primary/10 text-primary text-sm rounded-full hover:bg-primary/20 transition-colors">
+                        Book consultation
+                    </button>
+                    <button onclick="askQuestion('What procedures does Ms. (Dr.) Samantha Tross offer?')" class="px-3 py-1 bg-primary/10 text-primary text-sm rounded-full hover:bg-primary/20 transition-colors">
+                        Procedures
+                    </button>
+                    <button onclick="askQuestion('How long is recovery?')" class="px-3 py-1 bg-primary/10 text-primary text-sm rounded-full hover:bg-primary/20 transition-colors">
+                        Recovery time
+                    </button>
+                    <button onclick="askQuestion('What are the risks?')" class="px-3 py-1 bg-primary/10 text-primary text-sm rounded-full hover:bg-primary/20 transition-colors">
+                        Surgery risks
+                    </button>
+                </div>
+            </div>
+
+            <!-- Input Area -->
+            <div class="border-t p-4">
+                <div class="flex space-x-3">
+                    <input type="text" id="chat-input" placeholder="Ask me anything about Ms. (Dr.) Samantha Tross's services..." 
+                           class="flex-1 px-4 py-2 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent">
+                    <button onclick="sendMessage()" class="bg-primary text-white px-6 py-2 rounded-full hover:bg-primary-dark transition-colors">
+                        Send
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Contact Info -->
+        <div class="mt-6 bg-white rounded-2xl shadow-lg p-6">
+            <h3 class="text-lg font-semibold text-gray-900 mb-4">Need to speak to someone directly?</h3>
+            <div class="grid md:grid-cols-2 gap-4">
+                <div class="flex items-center space-x-3">
+                    <div class="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center">
+                        <svg class="w-5 h-5 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path>
+                        </svg>
+                    </div>
+                    <div>
+                        <p class="font-medium text-gray-900">Phone</p>
+                        <a href="tel:02079521009" class="text-primary hover:text-primary-dark">020 7952 1009</a>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-3">
+                    <div class="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center">
+                        <svg class="w-5 h-5 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+                        </svg>
+                    </div>
+                    <div>
+                        <p class="font-medium text-gray-900">Email</p>
+                        <a href="mailto:secretary@sztrossltd.com" class="text-primary hover:text-primary-dark">secretary@sztrossltd.com</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Conversation Memory
+        let conversationHistory = [];
+        let userContext = {
+            name: null,
+            condition: null,
+            interests: []
+        };
+
+        // AI Response Database
+        const aiResponses = {
+            // Booking & Administration
+            'book': {
+                keywords: ['book', 'consultation', 'appointment', 'schedule', 'referral', 'booking'],
+                response: `Great! I can help you book a consultation with Ms. (Dr.) Samantha Tross. 
+
+Are you looking to book as a self-pay patient or through private medical insurance? This will help me give you the most relevant information.`
+            },
+            
+            'self-pay': {
+                keywords: ['self-pay', 'self pay', 'paying myself', 'private pay', 'no insurance'],
+                response: `Perfect! For self-pay patients, you can book directly without a GP referral.
+
+<strong>📞 Phone:</strong> 020 7952 1009
+<strong>📧 Email:</strong> secretary@sztrossltd.com
+<strong>🌐 Online:</strong> <a href="book-now.html" class="text-primary underline">Complete our booking form</a>
+
+You'll typically be seen within 1-2 weeks. Would you like to know about consultation costs or what to expect during your visit?`
+            },
+            
+            'insurance': {
+                keywords: ['insurance', 'bupa', 'axa', 'aviva', 'vitality', 'cigna', 'private medical'],
+                response: `For private medical insurance, you'll need a GP referral letter for authorisation.
+
+<strong>📞 Phone:</strong> 020 7952 1009 (we can help with insurance queries)
+<strong>📧 Email:</strong> secretary@sztrossltd.com
+
+First, check with your insurer about coverage for orthopaedic consultations. Once you have your referral letter, we can book your appointment. Do you have your referral letter ready?`
+            },
+            
+            // Procedures
+            'procedures': {
+                keywords: ['procedure', 'surgery', 'hip', 'knee', 'replacement', 'arthroscopy'],
+                response: `Ms. (Dr.) Samantha Tross specialises in hip and knee replacement surgery, including robotic procedures.
+
+Are you interested in hip surgery, knee surgery, or would you like to know about the robotic options available?`
+            },
+            
+            'hip': {
+                keywords: ['hip', 'hip pain', 'hip replacement', 'hip surgery'],
+                response: `Ms. (Dr.) Samantha Tross offers both traditional and Mako robotic-assisted hip replacement.
+
+The robotic approach provides sub-millimeter accuracy for better outcomes. Are you experiencing hip pain, or would you like to know more about the robotic surgery options?`
+            },
+            
+            'knee': {
+                keywords: ['knee', 'knee pain', 'knee replacement', 'knee surgery'],
+                response: `Ms. (Dr.) Samantha Tross provides total and partial knee replacement options, including minimally invasive techniques.
+
+Are you experiencing knee pain, or would you like to know about the different knee surgery options available?`
+            },
+            
+            'robot': {
+                keywords: ['robot', 'robotic', 'mako', 'robotic surgery'],
+                response: `Ms. (Dr.) Samantha Tross is a pioneer in Mako robotic hip surgery in Europe! She was the first to perform this procedure in Europe.
+
+The robotic system provides sub-millimeter accuracy for better implant positioning. Would you like to know more about how robotic surgery works, or are you interested in booking a consultation?`
+            },
+            
+            // Recovery
+            'recovery': {
+                keywords: ['recovery', 'rehab', 'physiotherapy', 'driving', 'work', 'exercise'],
+                response: `Recovery varies by procedure, but typically involves:
+
+• Hospital stay: 2-4 nights
+• Driving: 4-6 weeks 
+• Work: 4-6 weeks (desk jobs), 8-12 weeks (physical jobs)
+• Physiotherapy starts immediately
+
+Are you asking about hip or knee surgery recovery specifically?`
+            },
+            
+            // Risks
+            'risks': {
+                keywords: ['risk', 'complication', 'infection', 'blood clot', 'dislocation'],
+                response: `<strong>Main Surgery Risks:</strong>
+• Infection (<1%)
+• Blood clots (DVT or pulmonary embolism)
+• Nerve or vessel injury
+• Leg length difference (hip)
+• Dislocation (hip)
+• Stiffness (knee)
+• Implant wear over time
+
+<strong>Safety Reminders:</strong>
+Seek urgent help if you develop sudden severe pain, fever, wound leakage, or difficulty moving the leg.
+
+Ms. (Dr.) Samantha Tross uses advanced techniques including robotic surgery to minimise risks and improve outcomes.
+
+<a href="robotic-surgery.html" class="text-primary underline">Learn about robotic surgery benefits</a>`
+            },
+            
+            // Insurance
+            'insurance': {
+                keywords: ['insurance', 'bupa', 'axa', 'aviva', 'payment', 'cost'],
+                response: `<strong>Insurance Coverage:</strong>
+Ms. (Dr.) Samantha Tross is recognised by major UK providers:
+• Bupa, AXA PPP, Aviva
+• WPA, Vitality, Cigna
+
+<strong>For Insurance Authorisation:</strong>
+• GP referral letter (usually required)
+• Policy number
+• Pre-authorisation code
+
+<strong>Self-Pay Patients:</strong>
+Costs are explained at booking. No referral needed.
+
+<strong>📞 Contact:</strong> 020 7952 1009 for pricing information
+<strong>📧 Email:</strong> secretary@sztrossltd.com
+
+<a href="locations.html" class="text-primary underline">View our locations</a>`
+            },
+            
+            // About Ms. (Dr.) Samantha Tross
+            'about': {
+                keywords: ['about', 'who', 'background', 'experience', 'qualifications'],
+                response: `<strong>About Ms. (Dr.) Samantha Tross:</strong>
+• Consultant Orthopaedic and Trauma Surgeon specialising in hip and knee replacement
+• Qualifications: MBBS, FRCS, FRCS(Ed), FRCS(Tr&Orth), MSL, DA (Hons) Portsmouth
+• First Black Female Orthopaedic consultant in the UK
+• Pioneer in robotic hip replacement surgery (Mako technology) - first woman in Europe to perform Mako Robotic Hip Surgery in 2018
+• Trained at University College London
+• Completed international fellowships in Toronto, Canada and Sydney, Australia
+• Council Member, Royal College of Surgeons of England (elected 2025)
+
+<strong>Specialities:</strong>
+• Joint replacement surgery (primary and revision)
+• Robotic-assisted procedures
+• Women's health orthopaedics
+• Minimally invasive surgery
+
+<a href="about.html" class="text-primary underline">Read Ms. (Dr.) Samantha Tross's full profile</a> | <a href="distinctions.html" class="text-primary underline">View her achievements</a>`
+            },
+            
+            // Locations
+            'locations': {
+                keywords: ['location', 'hospital', 'where', 'address', 'clinic'],
+                response: `<strong>Ms. (Dr.) Samantha Tross practices at five convenient London locations:</strong>
+
+• <strong>Chiswick Medical Practice</strong> - 347-352 Chiswick High Road, London, W4 4HS
+• <strong>Clementine Churchill Hospital</strong> - Sudbury Hill, Harrow, Middlesex, HA1 3RX
+• <strong>Cromwell Hospital</strong> - Cromwell Road, London, SW5 0TU
+• <strong>Fortius Clinic</strong> - 66 Wigmore Street, London, W1U 2SB
+• <strong>LycaHealth Canary Wharf</strong> - 1 Westferry Circus, London, E14 4HD
+
+All locations offer modern facilities and easy transport access.
+
+<a href="locations.html" class="text-primary underline">View detailed locations and maps</a>`
+            },
+            
+            // Women's Health
+            'womens': {
+                keywords: ['women', 'female', 'menopause', 'women\'s health', 'hormonal'],
+                response: `<strong>Women's Health Specialisation:</strong>
+Ms. (Dr.) Samantha Tross has a special interest in women's health orthopaedics, particularly:
+• Effects of hormonal changes on joint pathology
+• Women-specific orthopaedic conditions
+• Holistic approach to women's joint health
+
+She works with dedicated physiotherapists, dieticians and cognitive behavioural specialists to explore non-surgical solutions where possible.
+
+<a href="womens-health.html" class="text-primary underline">Learn about women's health services</a>`
+            },
+            
+            // Contact Information
+            'contact': {
+                keywords: ['contact', 'phone', 'email', 'call', 'reach', 'get in touch'],
+                response: `<strong>Contact Ms. (Dr.) Samantha Tross's Practice:</strong>
+
+<strong>📞 Phone:</strong> 020 7952 1009
+<strong>📧 Email:</strong> secretary@sztrossltd.com
+<strong>📱 Mobile/WhatsApp:</strong> 07943 947639 (urgent or admin queries)
+
+<strong>Office Hours:</strong> Monday-Friday, 9am-5pm
+<strong>Emergency:</strong> For urgent medical concerns, please call the main number
+
+<strong>Online Booking:</strong> Use the "Book Consultation" button on this website
+
+<a href="book-now.html" class="text-primary underline">Book your consultation now</a>`
+            }
+        };
+
+        function addMessage(text, sender) {
+            const chatMessages = document.getElementById('chat-messages');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `flex items-start space-x-3 ${sender === 'user' ? 'justify-end' : ''}`;
+
+            const avatarDiv = document.createElement('div');
+            avatarDiv.className = `w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 ${sender === 'user' ? 'bg-primary text-white order-2' : 'bg-primary/10 text-primary'}`;
+
+            if (sender === 'user') {
+                avatarDiv.innerHTML = '<svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>';
+            } else {
+                avatarDiv.innerHTML = '<svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>';
+            }
+
+            const messageContent = document.createElement('div');
+            messageContent.className = `rounded-lg p-4 max-w-xs ${sender === 'user' ? 'bg-primary text-white' : 'bg-gray-100 text-gray-800'}`;
+            messageContent.innerHTML = `<p class="text-sm">${text}</p>`;
+
+            if (sender === 'user') {
+                messageDiv.appendChild(messageContent);
+                messageDiv.appendChild(avatarDiv);
+            } else {
+                messageDiv.appendChild(avatarDiv);
+                messageDiv.appendChild(messageContent);
+            }
+
+            chatMessages.appendChild(messageDiv);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        function formatMessage(text) {
+            // Convert links to clickable links
+            return text.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" class="text-primary underline hover:text-primary-dark">$1</a>');
+        }
+
+        function sendMessage() {
+            const input = document.getElementById('chat-input');
+            const message = input.value.trim();
+            if (!message) return;
+
+            addMessage(message, 'user');
+            input.value = '';
+
+            setTimeout(() => {
+                const response = generateAIResponse(message);
+                addMessage(response, 'bot');
+            }, 1000);
+        }
+
+        function generateAIResponse(message) {
+            const lowerMessage = message.toLowerCase();
+            
+            // Store conversation history
+            conversationHistory.push({ type: 'user', message: message });
+            
+            // Update user context based on message
+            updateUserContext(message);
+            
+            // Smart context-aware responses based on conversation flow
+            const contextualResponse = getContextualResponse(message, lowerMessage);
+            if (contextualResponse) {
+                conversationHistory.push({ type: 'assistant', message: contextualResponse });
+                return contextualResponse;
+            }
+            
+            // Check for specific response categories
+            for (const [category, data] of Object.entries(aiResponses)) {
+                if (data.keywords.some(keyword => lowerMessage.includes(keyword))) {
+                    const response = personalizeResponse(data.response, message);
+                    conversationHistory.push({ type: 'assistant', message: response });
+                    return response;
+                }
+            }
+            
+            // Enhanced default responses with more variety
+            if (lowerMessage.includes('hello') || lowerMessage.includes('hi') || lowerMessage.includes('hey')) {
+                const greetings = [
+                    `Hello! I'm Ms. (Dr.) Samantha Tross's AI assistant. I can help you with questions about hip and knee replacement surgery, booking consultations, recovery, and more. What would you like to know?`,
+                    `Hi there! I'm here to help with information about Ms. (Dr.) Samantha Tross's orthopaedic services. I can answer questions about hip and knee surgery, robotic procedures, recovery times, and booking consultations. What can I help you with?`,
+                    `Hello! Welcome to Ms. (Dr.) Samantha Tross's practice. I can provide detailed information about our orthopaedic services, including hip and knee replacement surgery, robotic surgery, women's health, and consultation booking. How can I assist you today?`
+                ];
+                return greetings[Math.floor(Math.random() * greetings.length)];
+            }
+            
+            if (lowerMessage.includes('thank') || lowerMessage.includes('thanks')) {
+                const thanks = [
+                    `You're very welcome! Is there anything else I can help you with about Ms. (Dr.) Samantha Tross's services?`,
+                    `My pleasure! Feel free to ask if you have any other questions about orthopaedic surgery or booking a consultation.`,
+                    `You're welcome! I'm here if you need more information about Ms. (Dr.) Samantha Tross's procedures or services.`
+                ];
+                return thanks[Math.floor(Math.random() * thanks.length)];
+            }
+            
+            // More specific responses based on context
+            if (lowerMessage.includes('pain') || lowerMessage.includes('hurt') || lowerMessage.includes('ache')) {
+                return `I understand you're experiencing pain. Ms. (Dr.) Samantha Tross specialises in treating hip and knee pain through various approaches including joint replacement surgery, robotic surgery, and conservative treatments. For hip pain, she offers both traditional and Mako robotic-assisted hip replacement. For knee pain, she provides total and partial knee replacement options. Would you like to know more about specific treatment options or book a consultation to discuss your pain?`;
+            }
+            
+            if (lowerMessage.includes('cost') || lowerMessage.includes('price') || lowerMessage.includes('expensive')) {
+                return `Ms. (Dr.) Samantha Tross's consultation fees vary depending on the type of consultation and location. She is recognised by major UK insurance providers including Bupa, AXA PPP, Aviva, WPA, Vitality, and Cigna. For self-pay patients, costs are explained at booking. I'd recommend calling 020 7952 1009 or emailing secretary@sztrossltd.com for specific pricing information. Would you like to know more about insurance coverage or booking options?`;
+            }
+            
+            if (lowerMessage.includes('time') || lowerMessage.includes('how long') || lowerMessage.includes('duration')) {
+                return `Consultation appointments are usually available within 1-2 weeks, with urgent cases often seen sooner. Recovery times vary: hip replacement typically involves 2-4 nights in hospital, with driving possible after 4-6 weeks. Knee replacement has similar timelines. Ms. (Dr.) Samantha Tross uses minimally invasive techniques to reduce recovery time. Would you like specific information about a particular procedure's timeline?`;
+            }
+            
+            if (lowerMessage.includes('location') || lowerMessage.includes('where') || lowerMessage.includes('address')) {
+                return `Ms. (Dr.) Samantha Tross practices at five convenient London locations (in alphabetical order): Chiswick Medical Practice, Clementine Churchill Hospital (Harrow), Cromwell Hospital (South Kensington), Fortius Clinic (Marylebone), and LycaHealth Canary Wharf. All locations offer modern facilities and easy transport access. You can choose your preferred location when booking. Would you like more details about any specific location?`;
+            }
+            
+            if (lowerMessage.includes('robot') || lowerMessage.includes('robotic') || lowerMessage.includes('mako')) {
+                return `Ms. (Dr.) Samantha Tross is a pioneer in Mako robotic hip surgery in Europe! She offers robotic-assisted hip and knee replacement using the latest Mako technology, which provides sub-millimeter accuracy and improved patient outcomes. The robotic system helps with precise implant positioning and can lead to faster recovery. Would you like to know more about the benefits of robotic surgery or book a consultation to discuss if it's right for you?`;
+            }
+            
+            if (lowerMessage.includes('woman') || lowerMessage.includes('female') || lowerMessage.includes('menopause') || lowerMessage.includes('hormonal')) {
+                return `Ms. (Dr.) Samantha Tross has a special interest in women's health orthopaedics, particularly the effects of hormonal changes on joint pathology. She understands the unique challenges women face with joint health and offers specialised care. As the first Black Female Orthopaedic consultant in the UK, she brings valuable perspective to women's orthopaedic health. Would you like to know more about women's health services or book a consultation?`;
+            }
+            
+            // More intelligent fallback responses
+            const fallbacks = [
+                `I'd be happy to help you with information about Ms. (Dr.) Samantha Tross's orthopaedic services. Could you tell me more specifically what you'd like to know? For example, are you interested in hip surgery, knee surgery, robotic procedures, or booking a consultation?`,
+                `That's an interesting question! Ms. (Dr.) Samantha Tross offers comprehensive orthopaedic care including hip and knee replacement, robotic surgery, and women's health services. Could you be more specific about what aspect you'd like to learn about?`,
+                `I want to make sure I give you the most helpful information. Are you asking about a specific procedure (hip/knee replacement, robotic surgery), recovery information, booking a consultation, or something else?`
+            ];
+            
+            const response = fallbacks[Math.floor(Math.random() * fallbacks.length)];
+            conversationHistory.push({ type: 'assistant', message: response });
+            return response;
+        }
+
+        function getContextualResponse(message, lowerMessage) {
+            // Check conversation history for context
+            const lastAssistantMessage = conversationHistory.filter(h => h.type === 'assistant').slice(-1)[0];
+            const lastUserMessage = conversationHistory.filter(h => h.type === 'user').slice(-2, -1)[0];
+            
+            // If we just asked about self-pay vs insurance
+            if (lastAssistantMessage && lastAssistantMessage.message.includes('self-pay patient or through private medical insurance')) {
+                if (lowerMessage.includes('self') && (lowerMessage.includes('pay') || lowerMessage.includes('paying'))) {
+                    return `Perfect! For self-pay patients, you can book directly without a GP referral.
+
+<strong>📞 Phone:</strong> 020 7952 1009
+<strong>📧 Email:</strong> secretary@sztrossltd.com
+<strong>🌐 Online:</strong> <a href="book-now.html" class="text-primary underline">Complete our booking form</a>
+
+You'll typically be seen within 1-2 weeks. Would you like to know about consultation costs or what to expect during your visit?`;
+                }
+                if (lowerMessage.includes('insurance') || lowerMessage.includes('bupa') || lowerMessage.includes('axa') || lowerMessage.includes('aviva')) {
+                    return `For private medical insurance, you'll need a GP referral letter for authorisation.
+
+<strong>📞 Phone:</strong> 020 7952 1009 (we can help with insurance queries)
+<strong>📧 Email:</strong> secretary@sztrossltd.com
+
+First, check with your insurer about coverage for orthopaedic consultations. Once you have your referral letter, we can book your appointment. Do you have your referral letter ready?`;
+                }
+            }
+            
+            // If we just asked about hip vs knee surgery
+            if (lastAssistantMessage && lastAssistantMessage.message.includes('hip surgery, knee surgery, or robotic options')) {
+                if (lowerMessage.includes('hip')) {
+                    return `Ms. (Dr.) Samantha Tross offers both traditional and Mako robotic-assisted hip replacement.
+
+The robotic approach provides sub-millimeter accuracy for better outcomes. Are you experiencing hip pain, or would you like to know more about the robotic surgery options?`;
+                }
+                if (lowerMessage.includes('knee')) {
+                    return `Ms. (Dr.) Samantha Tross provides total and partial knee replacement options, including minimally invasive techniques.
+
+Are you experiencing knee pain, or would you like to know about the different knee surgery options available?`;
+                }
+                if (lowerMessage.includes('robot') || lowerMessage.includes('robotic')) {
+                    return `Ms. (Dr.) Samantha Tross is a pioneer in Mako robotic hip surgery in Europe! She was the first to perform this procedure in Europe.
+
+The robotic system provides sub-millimeter accuracy for better implant positioning. Would you like to know more about how robotic surgery works, or are you interested in booking a consultation?`;
+                }
+            }
+            
+            // If we just asked about recovery for hip vs knee
+            if (lastAssistantMessage && lastAssistantMessage.message.includes('hip or knee surgery recovery specifically')) {
+                if (lowerMessage.includes('hip')) {
+                    return `For hip replacement recovery:
+
+• Hospital stay: 2-4 nights
+• Walking with support: Day 1-2
+• Driving: 4-6 weeks
+• Full recovery: 3-6 months
+• Physiotherapy: Starts immediately
+
+The robotic approach often has faster recovery times. Would you like to know more about robotic hip surgery?`;
+                }
+                if (lowerMessage.includes('knee')) {
+                    return `For knee replacement recovery:
+
+• Hospital stay: 2-4 nights  
+• Walking with support: Day 1-2
+• Driving: 4-6 weeks
+• Full recovery: 3-6 months
+• Physiotherapy: Starts immediately
+
+Would you like to know about the different types of knee replacement available?`;
+                }
+            }
+            
+            // If we just asked about costs or what to expect
+            if (lastAssistantMessage && lastAssistantMessage.message.includes('consultation costs or what to expect')) {
+                if (lowerMessage.includes('cost') || lowerMessage.includes('price') || lowerMessage.includes('fee')) {
+                    return `Consultation costs vary depending on the type of assessment needed. 
+
+<strong>📞 Phone:</strong> 020 7952 1009 for specific pricing
+<strong>📧 Email:</strong> secretary@sztrossltd.com
+
+Would you like to know what to expect during your consultation instead?`;
+                }
+                if (lowerMessage.includes('expect') || lowerMessage.includes('consultation') || lowerMessage.includes('visit')) {
+                    return `During your consultation with Ms. (Dr.) Samantha Tross:
+
+• Comprehensive assessment of your condition (30-45 minutes)
+• Discussion of treatment options
+• Clear explanation of next steps
+• X-rays or scans if needed
+• Treatment plan development
+
+Would you like to book your consultation now, or do you have other questions?`;
+                }
+            }
+            
+            return null; // No contextual response found
+        }
+
+        function updateUserContext(message) {
+            const lowerMessage = message.toLowerCase();
+            
+            // Extract name if mentioned
+            const nameMatch = message.match(/my name is (\w+)|i'm (\w+)|i am (\w+)|call me (\w+)/i);
+            if (nameMatch) {
+                userContext.name = nameMatch[1] || nameMatch[2] || nameMatch[3] || nameMatch[4];
+            }
+            
+            // Extract condition/interest
+            if (lowerMessage.includes('hip') || lowerMessage.includes('hip pain')) {
+                userContext.condition = 'hip';
+                userContext.interests.push('hip surgery');
+            }
+            if (lowerMessage.includes('knee') || lowerMessage.includes('knee pain')) {
+                userContext.condition = 'knee';
+                userContext.interests.push('knee surgery');
+            }
+            if (lowerMessage.includes('robot') || lowerMessage.includes('robotic')) {
+                userContext.interests.push('robotic surgery');
+            }
+            if (lowerMessage.includes('woman') || lowerMessage.includes('female') || lowerMessage.includes('menopause')) {
+                userContext.interests.push('women\'s health');
+            }
+        }
+
+        function personalizeResponse(baseResponse, userMessage) {
+            let personalizedResponse = baseResponse;
+            
+            // Add personalization based on context
+            if (userContext.name) {
+                personalizedResponse = personalizedResponse.replace(/Hello!/g, `Hello ${userContext.name}!`);
+                personalizedResponse = personalizedResponse.replace(/Hi there!/g, `Hi ${userContext.name}!`);
+            }
+            
+            // Add context-aware follow-ups
+            if (userContext.condition === 'hip' && userMessage.toLowerCase().includes('pain')) {
+                personalizedResponse += `\n\nSince you mentioned hip pain, Ms. (Dr.) Samantha Tross specialises in both traditional and Mako robotic-assisted hip replacement. The robotic approach can provide more precise implant positioning and potentially faster recovery. Would you like to know more about these options?`;
+            }
+            
+            if (userContext.condition === 'knee' && userMessage.toLowerCase().includes('pain')) {
+                personalizedResponse += `\n\nFor knee pain, Ms. (Dr.) Samantha Tross offers both total and partial knee replacement options. She uses minimally invasive techniques to reduce recovery time. Would you like specific information about knee surgery options?`;
+            }
+            
+            if (userContext.interests.includes('robotic surgery') && userMessage.toLowerCase().includes('robot')) {
+                personalizedResponse += `\n\nMs. (Dr.) Samantha Tross is actually a pioneer in Mako robotic hip surgery in Europe! She was the first to perform this procedure in Europe, which provides sub-millimeter accuracy for better outcomes.`;
+            }
+            
+            // Add conversation continuity
+            if (conversationHistory.length > 2) {
+                const lastUserMessage = conversationHistory[conversationHistory.length - 2].message.toLowerCase();
+                if (lastUserMessage.includes('book') && userMessage.toLowerCase().includes('when')) {
+                    personalizedResponse += `\n\nBased on your interest in booking, I'd recommend calling our office at 020 7952 1009 to discuss your specific needs and find the best appointment time for you.`;
+                }
+            }
+            
+            return personalizedResponse;
+        }
+
+        function askQuestion(question) {
+            document.getElementById('chat-input').value = question;
+            sendMessage();
+        }
+
+        function resetConversation() {
+            conversationHistory = [];
+            userContext = {
+                name: null,
+                condition: null,
+                interests: []
+            };
+        }
+
+        // Enhanced welcome message with personality
+        function getWelcomeMessage() {
+            const welcomeMessages = [
+                `Hello! I'm Ms. (Dr.) Samantha Tross's AI assistant. I can help you with questions about hip and knee replacement surgery, booking consultations, recovery, and more. What would you like to know?`,
+                `Hi there! I'm here to help with information about Ms. (Dr.) Samantha Tross's orthopaedic services. I can answer questions about hip and knee surgery, robotic procedures, recovery times, and booking consultations. What can I help you with?`,
+                `Hello! Welcome to Ms. (Dr.) Samantha Tross's practice. I can provide detailed information about our orthopaedic services, including hip and knee replacement surgery, robotic surgery, women's health, and consultation booking. How can I assist you today?`
+            ];
+            return welcomeMessages[Math.floor(Math.random() * welcomeMessages.length)];
+        }
+
+        // Initialize welcome message
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('welcome-message').textContent = getWelcomeMessage();
+        });
+
+        // Handle Enter key
+        document.getElementById('chat-input').addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                sendMessage();
+            }
+        });
+    </script>
+    <!-- Insurer Section -->
+    <section class="insurer-section bg-white py-12">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <p class="insurer-text text-gray-700">
+                Ms Tross is authorised by a number of Leading Insurance Companies. See common ones below. Please enquire with her secretary if you do not see your Insurance Company listed, as list is not exhaustive.
+            </p>
+            <div class="logo-slider">
+                <div class="logo-track">
+                    <!-- First set of logos -->
+                    <img src="Insurance logos/png-transparent-bupa-hd-logo-thumbnail.png" alt="BUPA Insurance" loading="lazy">
+                    <img src="Insurance logos/Unknown-removebg-preview.png" alt="WPA Insurance" loading="lazy">
+                    <img src="Insurance logos/png-transparent-axa-ppp-healthcare-health-insurance-business-business-blue-angle-text-thumbnail.png" alt="AXA Insurance" loading="lazy">
+                    <img src="Insurance logos/png-transparent-tree-of-life-cigna-insurance-health-insurance-health-care-life-insurance-cigna-global-dental-insurance-thumbnail.png" alt="Cigna Insurance" loading="lazy">
+                    <img src="Insurance logos/png-transparent-logo-text-aviva-insurance-aviva-ltd-symbol-computer-font-line-area-thumbnail.png" alt="Aviva Insurance" loading="lazy">
+                    <img src="Insurance logos/png-transparent-logo-aia-group-others-text-logo-insurance-thumbnail.png" alt="AIA Insurance" loading="lazy">
+                    <!-- Duplicate set for seamless loop -->
+                    <img src="Insurance logos/png-transparent-bupa-hd-logo-thumbnail.png" alt="BUPA Insurance" loading="lazy">
+                    <img src="Insurance logos/Unknown-removebg-preview.png" alt="WPA Insurance" loading="lazy">
+                    <img src="Insurance logos/png-transparent-axa-ppp-healthcare-health-insurance-business-business-blue-angle-text-thumbnail.png" alt="AXA Insurance" loading="lazy">
+                    <img src="Insurance logos/png-transparent-tree-of-life-cigna-insurance-health-insurance-health-care-life-insurance-cigna-global-dental-insurance-thumbnail.png" alt="Cigna Insurance" loading="lazy">
+                    <img src="Insurance logos/png-transparent-logo-text-aviva-insurance-aviva-ltd-symbol-computer-font-line-area-thumbnail.png" alt="Aviva Insurance" loading="lazy">
+                    <img src="Insurance logos/png-transparent-logo-aia-group-others-text-logo-insurance-thumbnail.png" alt="AIA Insurance" loading="lazy">
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+<script async id="netlify-rum-container" src="/.netlify/scripts/rum" data-netlify-rum-site-id="173c596a-91ac-4080-a01b-f77af3523c54" data-netlify-deploy-branch="" data-netlify-deploy-context="production" data-netlify-cwv-token="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzaXRlX2lkIjoiMTczYzU5NmEtOTFhYy00MDgwLWEwMWItZjc3YWYzNTIzYzU0IiwiYWNjb3VudF9pZCI6IjY4N2ZiMmYwZjk1NjI2NWExM2JkMTY4YSIsImRlcGxveV9pZCI6IjY5Y2U3ZWE3MzdlZmFkMjc5OGZmZDUwZiIsImlzc3VlciI6Im5mc2VydmVyIn0.FhgN3Uoi1OJpebdfomlfYZ0K5VOj074cYdR7wP8f__E"></script>
+</body>
+</html>

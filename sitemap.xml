@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1"
+        xmlns:news="http://www.google.com/schemas/sitemap-news/0.9">
+    
+    <!-- Homepage -->
+    <url>
+        <loc>https://www.sztrossltd.com/</loc>
+        <lastmod>2025-01-27T00:00:00+00:00</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>1.0</priority>
+        <image:image>
+            <image:loc>https://www.sztrossltd.com/images/drs.webp</image:loc>
+            <image:title>Ms. (Dr.) Samantha Tross - Consultant Orthopaedic Surgeon</image:title>
+            <image:caption>Ms. (Dr.) Samantha Tross specialising in joint replacement surgery in London</image:caption>
+        </image:image>
+    </url>
+    
+    <!-- About Page -->
+    <url>
+        <loc>https://www.sztrossltd.com/about.html</loc>
+        <lastmod>2025-01-27T00:00:00+00:00</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.9</priority>
+        <image:image>
+            <image:loc>https://www.sztrossltd.com/images/samantha_tross-alt.webp</image:loc>
+            <image:title>About Ms. (Dr.) Samantha Tross</image:title>
+            <image:caption>Professional profile of Ms. (Dr.) Samantha Tross</image:caption>
+        </image:image>
+    </url>
+    
+    <!-- Women's Health Page -->
+    <url>
+        <loc>https://www.sztrossltd.com/womens-health.html</loc>
+        <lastmod>2025-01-27T00:00:00+00:00</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+        <image:image>
+            <image:loc>https://www.sztrossltd.com/images/womanshoulder.webp</image:loc>
+            <image:title>Women's Health Orthopaedics</image:title>
+            <image:caption>Specialised care for menopausal joint pathology</image:caption>
+        </image:image>
+    </url>
+    
+    <!-- Distinctions Page -->
+    <url>
+        <loc>https://www.sztrossltd.com/distinctions.html</loc>
+        <lastmod>2025-01-27T00:00:00+00:00</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+        <image:image>
+            <image:loc>https://www.sztrossltd.com/images/dis.webp</image:loc>
+            <image:title>Dr. Tross's Distinctions and Recognition</image:title>
+            <image:caption>Awards and media recognition for Ms. (Dr.) Samantha Tross</image:caption>
+        </image:image>
+    </url>
+    
+    <!-- Locations Page -->
+    <url>
+        <loc>https://www.sztrossltd.com/locations.html</loc>
+        <lastmod>2025-01-27T00:00:00+00:00</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+        <image:image>
+            <image:loc>https://www.sztrossltd.com/images/background find us.webp</image:loc>
+            <image:title>Practice Locations in London</image:title>
+            <image:caption>Dr. Tross's clinic locations across London</image:caption>
+        </image:image>
+    </url>
+    
+    <!-- Hip Replacement Page -->
+    <url>
+        <loc>https://www.sztrossltd.com/hip-replacement.html</loc>
+        <lastmod>2025-01-27T00:00:00+00:00</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
+        <image:image>
+            <image:loc>https://www.sztrossltd.com/images/hipsurgery.webp</image:loc>
+            <image:title>Hip Replacement Surgery</image:title>
+            <image:caption>Advanced hip replacement procedures in London</image:caption>
+        </image:image>
+    </url>
+    
+    <!-- Knee Replacement Page -->
+    <url>
+        <loc>https://www.sztrossltd.com/knee-replacement.html</loc>
+        <lastmod>2025-01-27T00:00:00+00:00</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
+        <image:image>
+            <image:loc>https://www.sztrossltd.com/images/knee surgery.png</image:loc>
+            <image:title>Knee Replacement Surgery</image:title>
+            <image:caption>Comprehensive knee replacement procedures in London</image:caption>
+        </image:image>
+    </url>
+    
+    
+    <!-- Robotic Surgery Page -->
+    <url>
+        <loc>https://www.sztrossltd.com/robotic-surgery.html</loc>
+        <lastmod>2025-01-27T00:00:00+00:00</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
+        <image:image>
+            <image:loc>https://www.sztrossltd.com/images/robotic-surg.webp</image:loc>
+            <image:title>Robotic Surgery</image:title>
+            <image:caption>Mako robotic-assisted joint replacement surgery</image:caption>
+        </image:image>
+    </url>
+    
+</urlset>
+
+

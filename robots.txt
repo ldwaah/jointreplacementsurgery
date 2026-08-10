@@ -1,0 +1,37 @@
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://www.sztrossltd.com/sitemap.xml
+
+# Crawl-delay for respectful crawling
+Crawl-delay: 1
+
+# Disallow admin or private areas (if any exist in future)
+Disallow: /admin/
+Disallow: /private/
+Disallow: /*.log$
+Disallow: /tmp/
+
+# Allow important pages
+Allow: /about.html
+Allow: /womens-health.html
+Allow: /distinctions.html
+Allow: /locations.html
+Allow: /hip-replacement.html
+Allow: /knee-replacement.html
+Allow: /additional-procedures.html
+Allow: /robotic-surgery.html
+
+# Allow images
+Allow: /images/
+Allow: /*.webp$
+Allow: /*.png$
+Allow: /*.jpg$
+Allow: /*.jpeg$
+
+# Allow CSS and JS
+Allow: /*.css$
+Allow: /*.js$
+
+
