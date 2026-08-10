@@ -289,9 +289,16 @@
         #hero-video {
             opacity: 0;
             transition: opacity 0.8s ease;
+            object-position: center 30%;
         }
         #hero-video.is-ready {
             opacity: 1;
+        }
+        #hero-poster {
+            transition: opacity 0.8s ease;
+        }
+        #hero.is-video-ready #hero-poster {
+            opacity: 0;
         }
         @media (prefers-reduced-motion: reduce) {
             #hero-video,
@@ -506,11 +513,11 @@
             </div>
         </div>
 
-        <!-- Sound control: muted by default for autoplay -->
+        <!-- Sound control: muted by default for autoplay; left side avoids chat FAB -->
         <button
             id="hero-sound-toggle"
             type="button"
-            class="absolute bottom-8 right-6 z-20 inline-flex items-center gap-2 rounded-full bg-black/45 backdrop-blur-sm border border-white/30 text-white px-4 py-2 text-sm font-medium hover:bg-black/60 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-white/70"
+            class="absolute bottom-8 left-6 z-20 inline-flex items-center gap-2 rounded-full bg-black/45 backdrop-blur-sm border border-white/30 text-white px-4 py-2 text-sm font-medium hover:bg-black/60 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-white/70"
             aria-pressed="false"
             aria-controls="hero-video"
             aria-label="Unmute hero video"
@@ -1119,6 +1126,8 @@
             if (heroVideo && !prefersReducedMotion) {
                 const markReady = function() {
                     heroVideo.classList.add('is-ready');
+                    const heroSection = document.getElementById('hero');
+                    if (heroSection) heroSection.classList.add('is-video-ready');
                 };
                 heroVideo.addEventListener('loadeddata', markReady);
                 heroVideo.addEventListener('playing', markReady);
