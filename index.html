@@ -286,28 +286,21 @@
             0% { transform: translateX(0); }
             100% { transform: translateX(-50%); }
         }
-        #hero-video {
-            opacity: 0;
-            transition: opacity 0.8s ease;
-            object-position: center 30%;
+        #intro-video-wrap {
+            position: relative;
+            border-radius: 1rem;
+            overflow: hidden;
+            background: #0f172a;
+            box-shadow: 0 20px 40px rgba(15, 23, 42, 0.18);
         }
-        #hero-video.is-ready {
-            opacity: 1;
-        }
-        #hero-poster {
-            transition: opacity 0.8s ease;
-        }
-        #hero.is-video-ready #hero-poster {
-            opacity: 0;
+        #intro-video {
+            display: block;
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            object-fit: cover;
+            background: #0f172a;
         }
         @media (prefers-reduced-motion: reduce) {
-            #hero-video,
-            #hero-sound-toggle {
-                display: none !important;
-            }
-            #hero-poster {
-                opacity: 1 !important;
-            }
             .logo-track {
                 animation: none;
             }
@@ -434,10 +427,8 @@
 
     <!-- Hero Section -->
     <section id="hero" class="relative min-h-screen flex items-center justify-center overflow-hidden">
-        <!-- Full-bleed hero media -->
         <div class="absolute inset-0">
             <img
-                id="hero-poster"
                 src="homepage_hero_dr-tross-portrait.webp"
                 alt="Ms. (Dr.) Samantha Tross - Consultant Orthopaedic Surgeon specialising in joint replacement surgery in London"
                 class="absolute inset-0 w-full h-full object-cover"
@@ -445,26 +436,11 @@
                 width="1200"
                 height="800"
             >
-            <video
-                id="hero-video"
-                class="absolute inset-0 w-full h-full object-cover"
-                autoplay
-                muted
-                loop
-                playsinline
-                preload="metadata"
-                poster="homepage_hero_dr-tross-portrait.webp"
-                aria-label="Introduction video for Ms. (Dr.) Samantha Tross and Joint Replacement Surgery"
-            >
-                <source src="homepage-hero.mp4" type="video/mp4">
-            </video>
         </div>
 
-        <!-- Readability overlays: keep text clear without hiding the film -->
         <div class="absolute inset-0 bg-gradient-to-b from-black/55 via-black/35 to-black/60"></div>
         <div class="absolute inset-0 bg-gradient-to-br from-primary/25 via-transparent to-primary-dark/35"></div>
 
-        <!-- Hero Content -->
         <div class="relative z-10 text-center px-4 sm:px-6 lg:px-8 max-w-6xl mx-auto">
             <div class="text-lg sm:text-xl text-white font-semibold mb-4 tracking-wide">
                 Restore Movement. Reclaim Life.
@@ -513,26 +489,6 @@
             </div>
         </div>
 
-        <!-- Sound control: muted by default for autoplay; left side avoids chat FAB -->
-        <button
-            id="hero-sound-toggle"
-            type="button"
-            class="absolute bottom-8 left-6 z-20 inline-flex items-center gap-2 rounded-full bg-black/45 backdrop-blur-sm border border-white/30 text-white px-4 py-2 text-sm font-medium hover:bg-black/60 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-white/70"
-            aria-pressed="false"
-            aria-controls="hero-video"
-            aria-label="Unmute hero video"
-        >
-            <svg id="hero-icon-muted" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z"></path>
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2"></path>
-            </svg>
-            <svg id="hero-icon-unmuted" class="w-5 h-5 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.536 8.464a5 5 0 010 7.072M18.364 5.636a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z"></path>
-            </svg>
-            <span id="hero-sound-label">Unmute</span>
-        </button>
-
-        <!-- Scroll Indicator -->
         <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce pointer-events-none">
             <div class="w-6 h-10 border-2 border-white rounded-full flex justify-center">
                 <div class="w-1 h-3 bg-white rounded-full mt-2 animate-pulse"></div>
@@ -592,8 +548,34 @@
         </div>
     </section>
 
+    <!-- Introduction video: below Sam's portrait, above Specialities -->
+    <section class="py-20 bg-gray-50" id="meet-ms-tross" aria-labelledby="intro-video-heading">
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-10">
+                <h2 id="intro-video-heading" class="text-4xl font-bold text-gray-900 mb-4">
+                    Meet <span class="text-primary">Ms. (Dr.) Samantha Tross</span>
+                </h2>
+                <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+                    Hear directly from London's leading joint replacement specialist about her approach to care.
+                </p>
+            </div>
+            <div id="intro-video-wrap">
+                <video
+                    id="intro-video"
+                    controls
+                    playsinline
+                    preload="metadata"
+                    poster="homepage_hero_dr-tross-portrait.webp"
+                    aria-label="Introduction video featuring Ms. (Dr.) Samantha Tross"
+                >
+                    <source src="homepage-hero.mp4" type="video/mp4">
+                </video>
+            </div>
+        </div>
+    </section>
+
     <!-- Specialities Section -->
-    <section class="py-20 bg-gray-50">
+    <section class="py-20 bg-white">
         <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
             <!-- Section Header -->
             <div class="text-center mb-16">
@@ -1115,58 +1097,17 @@
     <!-- Page interactions -->
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // Hero video: autoplay muted, pause off-screen, unmute control
-            const heroVideo = document.getElementById('hero-video');
-            const soundToggle = document.getElementById('hero-sound-toggle');
-            const soundLabel = document.getElementById('hero-sound-label');
-            const iconMuted = document.getElementById('hero-icon-muted');
-            const iconUnmuted = document.getElementById('hero-icon-unmuted');
-            const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-            if (heroVideo && !prefersReducedMotion) {
-                const markReady = function() {
-                    heroVideo.classList.add('is-ready');
-                    const heroSection = document.getElementById('hero');
-                    if (heroSection) heroSection.classList.add('is-video-ready');
-                };
-                heroVideo.addEventListener('loadeddata', markReady);
-                heroVideo.addEventListener('playing', markReady);
-
-                const tryPlay = function() {
-                    const playPromise = heroVideo.play();
-                    if (playPromise && typeof playPromise.catch === 'function') {
-                        playPromise.catch(function() {
-                            // Autoplay blocked: keep poster visible
-                        });
-                    }
-                };
-                tryPlay();
-
+            // Intro video: pause when scrolled off-screen to save bandwidth
+            const introVideo = document.getElementById('intro-video');
+            if (introVideo) {
                 const visibilityObserver = new IntersectionObserver(function(entries) {
                     entries.forEach(function(entry) {
-                        if (entry.isIntersecting) {
-                            tryPlay();
-                        } else {
-                            heroVideo.pause();
+                        if (!entry.isIntersecting && !introVideo.paused) {
+                            introVideo.pause();
                         }
                     });
-                }, { threshold: 0.25 });
-                visibilityObserver.observe(heroVideo);
-
-                if (soundToggle) {
-                    soundToggle.addEventListener('click', function() {
-                        heroVideo.muted = !heroVideo.muted;
-                        const unmuted = !heroVideo.muted;
-                        soundToggle.setAttribute('aria-pressed', unmuted ? 'true' : 'false');
-                        soundToggle.setAttribute('aria-label', unmuted ? 'Mute hero video' : 'Unmute hero video');
-                        if (soundLabel) soundLabel.textContent = unmuted ? 'Mute' : 'Unmute';
-                        if (iconMuted) iconMuted.classList.toggle('hidden', unmuted);
-                        if (iconUnmuted) iconUnmuted.classList.toggle('hidden', !unmuted);
-                        tryPlay();
-                    });
-                }
-            } else if (soundToggle) {
-                soundToggle.classList.add('hidden');
+                }, { threshold: 0.2 });
+                visibilityObserver.observe(introVideo);
             }
 
             // Scroll-triggered animations (skip hero so first paint stays solid)
