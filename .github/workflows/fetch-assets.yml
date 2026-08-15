@@ -52,11 +52,17 @@ jobs:
           ; do
             name="${row%%|*}"; src="${row##*|}"
             curl -fsSL --retry 3 -o tmp.mp4 "$BASE/$src"
+            # H.264 for Safari and the broad baseline...
             ffmpeg -y -loglevel error -i tmp.mp4 -an \
               -vf "scale='min(1280,iw)':-2" \
               -c:v libx264 -crf 28 -preset slow -movflags +faststart "$name.mp4"
+            # ...and VP9, which is smaller and lets Chromium builds without
+            # proprietary codecs play it at all.
+            ffmpeg -y -loglevel error -i tmp.mp4 -an \
+              -vf "scale='min(1280,iw)':-2" \
+              -c:v libvpx-vp9 -crf 40 -b:v 0 -row-mt 1 "$name.webm"
             rm -f tmp.mp4
-            echo "$name.mp4 $(du -h "$name.mp4" | cut -f1)"
+            echo "$name $(du -h "$name.mp4" | cut -f1) mp4 / $(du -h "$name.webm" | cut -f1) webm"
           done
 
       - name: Commit

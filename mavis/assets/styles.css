@@ -1326,6 +1326,52 @@ h1, h2, h3, h4 {
 .skip-link:focus { top: 0; }
 
 /* ==========================================================================
+   Ambient section media
+   Textures and video sit behind the content, never over it.
+   ========================================================================== */
+.section--textured { position: relative; overflow: hidden; }
+.section--textured > .shell { position: relative; z-index: 1; }
+.section--textured::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: var(--texture);
+  background-size: cover;
+  background-position: center;
+  opacity: var(--texture-opacity, 0.4);
+  pointer-events: none;
+}
+
+.ambient {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: var(--ambient-opacity, 0.3);
+  pointer-events: none;
+  z-index: 0;
+}
+.has-ambient { position: relative; overflow: hidden; }
+.has-ambient > .shell { position: relative; z-index: 1; }
+
+/* A looping background is decoration; on a data saver or a reduced-motion
+   setting it is only cost, so drop it rather than pausing it. */
+@media (prefers-reduced-motion: reduce) {
+  .ambient { display: none; }
+}
+
+/* Art inside the writing cards */
+.card__art {
+  aspect-ratio: 16 / 10;
+  border-radius: 12px;
+  overflow: hidden;
+  margin: calc(clamp(1.5rem, 3vw, 2.1rem) * -1) calc(clamp(1.5rem, 3vw, 2.1rem) * -1) 0;
+  border-bottom: 1px solid var(--line);
+}
+.card__art img { width: 100%; height: 100%; object-fit: cover; border-radius: 0; }
+
+/* ==========================================================================
    Mobile optimisation
    Tap targets, thumb reach, and render cost on real phones.
    ========================================================================== */

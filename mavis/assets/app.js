@@ -421,6 +421,40 @@
     });
   }
 
+  /* --- Ambient background video ----------------------------------------- */
+  function ambient() {
+    var vids = $$('[data-ambient]');
+    if (!vids.length) return;
+    // Decorative only: never spend a download on it for someone who has asked
+    // for less motion, and never before it is close to being seen.
+    if (reduceMotion) return;
+
+    var start = function (v) {
+      if (v.dataset.started) return;
+      v.dataset.started = '1';
+      // Sources are held back in data-src so nothing is fetched until now;
+      // the browser then picks the first type it can actually play.
+      $$('source[data-src]', v).forEach(function (src) {
+        src.src = src.getAttribute('data-src');
+      });
+      v.load();
+      var p = v.play();
+      // Autoplay can still be refused (battery saver, iOS low power). The
+      // poster stays put, so a rejection is silent rather than broken.
+      if (p && p.catch) p.catch(function () {});
+    };
+
+    if (!('IntersectionObserver' in window)) { vids.forEach(start); return; }
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (!e.isIntersecting) return;
+        start(e.target);
+        io.unobserve(e.target);
+      });
+    }, { rootMargin: '200px' });
+    vids.forEach(function (v) { io.observe(v); });
+  }
+
   /* --- Year stamp ------------------------------------------------------- */
   function year() {
     $$('[data-year]').forEach(function (el) { el.textContent = new Date().getFullYear(); });
@@ -441,6 +475,7 @@
     quotes();
     counters();
     quiz();
+    ambient();
     forms();
     prefill();
     year();

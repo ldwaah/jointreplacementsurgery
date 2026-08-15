@@ -498,7 +498,7 @@
   </section>
 
   <!-- ====================================================== 8. METHOD -->
-  <section class="section section--ink" id="method">
+  <section class="section section--ink section--textured" id="method" style="--texture:url(assets/texture-dark.webp);--texture-opacity:.45">
     <div class="shell">
       <div class="section-head">
         <div>
@@ -728,7 +728,12 @@
   </section>
 
   <!-- ====================================================== 13. FINAL CTA -->
-  <section class="section section--ink cta">
+  <section class="section section--ink cta has-ambient">
+    <video class="ambient" muted loop playsinline preload="none" data-ambient
+           poster="assets/texture-dark.webp" aria-hidden="true" tabindex="-1">
+      <source data-src="assets/hero-autumn.webm" type="video/webm">
+      <source data-src="assets/hero-autumn.mp4" type="video/mp4">
+    </video>
     <div class="bloom cta__bloom" aria-hidden="true"></div>
     <div class="shell">
       <p class="eyebrow reveal" style="justify-content:center">One next step</p>
