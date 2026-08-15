@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Book a free call — Mpathy Therapy with Mavis</title>
+<meta name="description" content="Book a free 20-minute call with Mavis, BABCP Accredited CBT Psychotherapist. Nothing to prepare, nothing sold, and an honest answer about fit.">
+<meta name="theme-color" content="#17120f">
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..600;1,9..144,300..600&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/styles.css">
+</head>
+<body>
+<div class="grain" aria-hidden="true"></div>
+<div class="progress" aria-hidden="true"></div>
+<a class="skip-link" href="#main">Skip to content</a>
+
+<!-- PRE-LAUNCH NOTICE — delete this one element before going live. -->
+<div class="notice">
+  Draft — this form is not yet connected to an inbox. See README.md
+</div>
+
+<header class="header">
+  <div class="shell header__inner">
+    <a class="brand" href="index.html"><b>Mpathy</b><span>Therapy</span></a>
+    <nav class="nav" aria-label="Primary">
+      <a href="services.html">Therapy</a>
+      <a href="index.html#pathways">Coaching &amp; courses</a>
+      <a href="about.html">About Mavis</a>
+      <a href="writing.html">Writing</a>
+      </nav>
+    <button class="menu-btn" aria-expanded="false" aria-controls="drawer">
+      <span class="menu-btn__bars" aria-hidden="true"><i></i><i></i></span> Menu
+    </button>
+  </div>
+</header>
+
+<div class="drawer" id="drawer" aria-hidden="true" tabindex="-1">
+  <button class="drawer__close">Close</button>
+  <nav class="drawer__nav" aria-label="Mobile">
+    <a href="services.html">Therapy</a>
+    <a href="index.html#pathways">Coaching &amp; courses</a>
+    <a href="about.html">About Mavis</a>
+    <a href="writing.html">Writing</a>
+  </nav>
+</div>
+
+<main id="main">
+  <section class="page-hero">
+    <div class="bloom page-hero__bloom" aria-hidden="true"></div>
+    <div class="shell">
+      <p class="eyebrow">The first step</p>
+      <h1 class="h-1 mt-l" style="max-width:20ch">
+        Tell me a little,<br>and I will tell you <em class="italic-accent">honestly</em>
+      </h1>
+      <p class="lede mt-l">
+        This goes straight to me — not to an assistant, not to a funnel. You will hear back
+        within two working days with either a time for a call or, if I am not the right person,
+        the name of someone who is.
+      </p>
+    </div>
+  </section>
+
+  <section class="section section--tight" style="padding-top:0">
+    <div class="shell">
+      <div class="split" style="align-items:start">
+
+        <!-- Reassurance rail -->
+        <div class="stack reveal" style="position:sticky;top:6.5rem">
+          <div class="price-card" style="position:static">
+            <p class="small-caps">What happens next</p>
+            <ol class="checklist" style="counter-reset:none">
+              <li>You send this. It arrives in my inbox, and nowhere else.</li>
+              <li>I reply within two working days, personally.</li>
+              <li>We speak for 20 minutes, free. You prepare nothing.</li>
+              <li>You take as long as you like to decide. Nobody follows up twice.</li>
+            </ol>
+          </div>
+          <div class="price-card" style="position:static">
+            <p class="small-caps">If cost is the issue</p>
+            <p class="prose" style="font-size:.95rem">
+              Say so in the message. Payment plans exist for everything, and a small number of
+              reduced-fee places are held open at all times. Asking has never once counted
+              against anybody.
+            </p>
+          </div>
+        </div>
+
+        <!-- Form -->
+        <div class="reveal" style="--delay:120ms">
+          <!--
+            TO CONNECT THIS FORM, pick one:
+            · Netlify Forms — add: netlify data-netlify="true" name="enquiry"
+            · Formspree     — add: action="https://formspree.io/f/XXXX" method="POST"
+            · Your own      — add: action="/api/enquiry" method="POST"
+            While `action` is empty the script shows an in-page confirmation instead
+            of posting the visitor to a dead endpoint.
+          -->
+          <form class="form-grid" data-form
+                data-success="Thank you — that has reached me. I will write back within two working days.">
+            <div class="form-grid form-grid--2">
+              <div class="field">
+                <label for="f-name">Your name</label>
+                <input id="f-name" name="name" type="text" placeholder="First name is enough" required>
+              </div>
+              <div class="field">
+                <label for="f-email">Email</label>
+                <input id="f-email" name="email" type="email" placeholder="you@example.com" required>
+              </div>
+            </div>
+
+            <div class="field">
+              <label for="f-path">What are you enquiring about?</label>
+              <select id="f-path" name="path" data-path-select>
+                <option value="">I am not sure yet — help me work it out</option>
+                <option value="therapy">CBT therapy — weekly one-to-one</option>
+                <option value="coaching">Coaching — three or six months</option>
+                <option value="courses">Courses — join the waiting list</option>
+                <option value="speaking">Writing, speaking or collaboration</option>
+              </select>
+            </div>
+
+            <div class="field">
+              <label for="f-message">What is bringing you here?</label>
+              <textarea id="f-message" name="message" rows="6"
+                placeholder="As much or as little as you want to say. A single sentence is a perfectly good start." required></textarea>
+            </div>
+
+            <div class="field">
+              <label for="f-when">Best times to reach you</label>
+              <input id="f-when" name="availability" type="text" placeholder="e.g. weekday mornings, or after 7pm">
+            </div>
+
+            <div class="form-status" role="status" aria-live="polite"></div>
+
+            <button class="btn" type="submit" data-magnetic>
+              Send to Mavis <span class="btn__arrow" aria-hidden="true">→</span>
+            </button>
+
+            <p class="form-note">
+              What you write here is confidential and stored securely. It is used only to reply
+              to you, and never added to a mailing list without you asking.
+            </p>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--warm section--tight">
+    <div class="shell shell--narrow">
+      <h2 class="h-3 reveal" style="margin-bottom:2rem">Still deciding?</h2>
+      <div class="accordion reveal">
+        <div class="accordion__item">
+          <button class="accordion__trigger" aria-expanded="false" aria-controls="a1">Do I have to know what I want first?<span class="accordion__icon" aria-hidden="true"></span></button>
+          <div class="accordion__panel" id="a1"><div><p>No. “Something is not right and I cannot name it” is one of the most common opening lines I get, and one of the most workable.</p></div></div>
+        </div>
+        <div class="accordion__item">
+          <button class="accordion__trigger" aria-expanded="false" aria-controls="a2">Will I be pushed into booking?<span class="accordion__icon" aria-hidden="true"></span></button>
+          <div class="accordion__panel" id="a2"><div><p>No. The consultation is a conversation, not a sales call, and I do not chase. If you go quiet, I assume you had good reasons.</p></div></div>
+        </div>
+        <div class="accordion__item">
+          <button class="accordion__trigger" aria-expanded="false" aria-controls="a3">What if I cry on the call?<span class="accordion__icon" aria-hidden="true"></span></button>
+          <div class="accordion__panel" id="a3"><div><p>Then you cry on the call. It happens often, it is not embarrassing, and it is usually the first sign we are in the right place.</p></div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="footer">
+  <div class="shell">
+    <div class="footer__grid">
+      <div>
+        <a class="brand" href="index.html" style="color:var(--canvas)"><b>Mpathy</b><span>Therapy</span></a>
+        <p class="prose" style="color:rgba(246,240,232,.62);margin-top:1.25rem;max-width:36ch">
+          Where psychology meets soulful insight. Evidence-based CBT with Mavis.
+        </p>
+      </div>
+      <div class="footer__col">
+        <h4>Work with me</h4>
+        <ul>
+          <li><a href="services.html">CBT Therapy</a></li>
+          <li><a href="index.html#pathways">Coaching</a></li>
+          <li><a href="index.html#pathways">Courses</a></li>
+          <li><a href="writing.html">Writing</a></li>
+        </ul>
+      </div>
+      <div class="footer__col">
+        <h4>Practice</h4>
+        <ul>
+          <li><a href="about.html">About Mavis</a></li>
+          <li><a href="index.html#pathways">Coaching &amp; courses</a></li>
+          <li><a href="index.html#proof">Why no testimonials</a></li>
+          <li><a href="index.html#faq">Questions</a></li>
+        </ul>
+      </div>
+      <div class="footer__col">
+        <h4>Elsewhere</h4>
+        <ul>
+          <li><a href="https://www.instagram.com/mpathytherapy" rel="me noopener" target="_blank">Instagram</a></li>
+          <li><a href="mailto:hello@mpathytherapy.com">hello@mpathytherapy.com</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="safeguard">
+      <strong>If you need help now:</strong> this website is not an emergency service and
+      enquiries are not monitored around the clock. If you are in crisis or at risk, contact
+      your GP, call NHS 111, call 999, or reach the Samaritans free on 116 123, any time, day or night.
+    </div>
+
+    <div class="footer__bottom">
+      <p>© <span data-year>2026</span> Mpathy Therapy. All rights reserved.</p>
+      <p>BABCP Accredited · [ICO registration number]</p>
+      <p><a href="#">Privacy</a> · <a href="#">Terms</a> · <a href="#">Complaints</a></p>
+    </div>
+  </div>
+</footer>
+
+<script src="assets/app.js"></script>
+</body>
+</html>
