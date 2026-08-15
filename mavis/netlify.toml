@@ -1,0 +1,50 @@
+# Config for the Mpathy Therapy site only.
+#
+# Netlify reads this file when the project's *base directory* is set to
+# "mavis", which keeps this site completely separate from the root
+# netlify.toml used by the joint-replacement site in the same repo.
+#
+# Netlify project: mpathy-therapy
+#   Base directory:      mavis
+#   Build command:       (leave empty — static site, no build step)
+#   Publish directory:   mavis
+#   Branch to deploy:    claude/mavis-premium-website-kj9njc
+
+[build]
+  publish = "."
+  command = ""
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "SAMEORIGIN"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    X-Content-Type-Options = "nosniff"
+    Permissions-Policy = "geolocation=(), microphone=(), camera=()"
+
+# Fonts and the two stylesheets/scripts are safe to cache hard.
+[[headers]]
+  for = "/assets/*"
+  [headers.values]
+    Cache-Control = "public, max-age=3600"
+
+# Pretty URLs: /services instead of /services.html
+[[redirects]]
+  from = "/services"
+  to = "/services.html"
+  status = 200
+
+[[redirects]]
+  from = "/about"
+  to = "/about.html"
+  status = 200
+
+[[redirects]]
+  from = "/writing"
+  to = "/writing.html"
+  status = 200
+
+[[redirects]]
+  from = "/apply"
+  to = "/apply.html"
+  status = 200
