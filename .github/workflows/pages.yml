@@ -7,14 +7,14 @@ name: Deploy to GitHub Pages
 # Both are static, so there is no build step. Triggered manually, and on
 # pushes that touch the Mavis site.
 
+# Runs on main for every change. Once Pages is served by Actions the built-in
+# branch builds stop, so this workflow becomes the only thing keeping the
+# published site current — it must not be narrowed to one path or one site.
 on:
   workflow_dispatch:
   push:
     branches:
-      - claude/mavis-premium-website-kj9njc
-    paths:
-      - 'mavis/**'
-      - '.github/workflows/pages.yml'
+      - main
 
 permissions:
   contents: read
