@@ -502,6 +502,18 @@ h1, h2, h3, h4 {
   padding: 2rem;
 }
 .portrait img { width: 100%; height: 100%; object-fit: cover; position: absolute; inset: 0; }
+
+/* Cut-out portraits sit ON the gradient rather than covering it, so they must
+   not be cropped and must keep their transparency. */
+.portrait--cutout img { object-fit: contain; object-position: bottom center; }
+
+/* The round crop carries its own matte, so the frame drops its gradient. */
+.portrait--round {
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: none;
+  box-shadow: 0 34px 70px -45px rgba(23, 18, 15, 0.6);
+}
 .portrait__note {
   position: relative;
   font-size: var(--step--1);
