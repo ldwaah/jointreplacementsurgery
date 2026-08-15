@@ -184,16 +184,6 @@
     });
   }
 
-  function openPathway(key) {
-    var root = $('[data-tabs]');
-    if (!root || !root.selectTab) return;
-    var trigger = $('[role="tab"][data-key="' + key + '"]', root);
-    if (!trigger) return;
-    root.selectTab(trigger.getAttribute('aria-controls'));
-    var target = $('#pathways');
-    if (target) target.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'start' });
-  }
-
   /* --- Accordion -------------------------------------------------------- */
   function accordions() {
     $$('.accordion').forEach(function (root) {
@@ -285,32 +275,28 @@
   /* --- Guided quiz ------------------------------------------------------ */
   var QUIZ_RESULTS = {
     therapy: {
-      title: 'Start with Therapy',
-      body: 'What you are carrying deserves a clinical space, not a strategy session. We begin with a full assessment and weekly sessions until the ground feels steady underneath you.',
-      cta: 'Book a therapy consultation',
-      href: 'apply.html?path=therapy',
-      key: 'therapy'
+      title: 'Start with therapy',
+      body: 'What you are carrying deserves a clinical space. Weekly CBT, until the ground feels steady underneath you.',
+      cta: 'See therapy',
+      href: 'services.html'
     },
     coaching: {
-      title: 'Start with Coaching',
-      body: 'You are not in crisis — you are in transition. Coaching gives you a strategist and a witness for the next twelve months of your life, with the psychological depth most coaching skips.',
-      cta: 'Apply for coaching',
-      href: 'apply.html?path=coaching',
-      key: 'coaching'
+      title: 'Start with coaching',
+      body: 'You are not in crisis — you are deciding. Coaching gives you a strategist and a witness for the decision that has waited too long.',
+      cta: 'See coaching',
+      href: 'coaching.html'
     },
     courses: {
-      title: 'Start with a Course',
-      body: 'You want the framework in your own hands, at your own pace. The programmes give you the same method I use one-to-one, structured so you can work through it privately.',
-      cta: 'See the current cohort',
-      href: 'apply.html?path=courses',
-      key: 'courses'
+      title: 'Start with a course',
+      body: 'You want the framework in your own hands, at your own pace, privately.',
+      cta: 'See courses',
+      href: 'courses.html'
     },
     writing: {
-      title: 'Start with the Writing',
-      body: 'You are not ready to be in a room with someone yet — and that is a legitimate place to begin. Read first. The letters arrive every other Sunday and cost you nothing but attention.',
-      cta: 'Read the letters',
-      href: '#journal',
-      key: 'writing'
+      title: 'Start with the writing',
+      body: 'Not ready to be in a room with someone yet — a legitimate place to begin. Read first.',
+      cta: 'Read the writing',
+      href: 'writing.html'
     }
   };
 
@@ -342,10 +328,6 @@
       var link = $('[data-result-cta]', root);
       link.textContent = r.cta;
       link.setAttribute('href', r.href);
-      var jump = $('[data-result-jump]', root);
-      if (jump) {
-        jump.onclick = function (e) { e.preventDefault(); openPathway(r.key); };
-      }
       steps.forEach(function (s) { s.classList.remove('is-active'); });
       bars.forEach(function (b) { b.classList.add('is-done'); });
       result.classList.add('is-active');
@@ -411,16 +393,6 @@
     if (match) select.value = path;
   }
 
-  /* --- Pathway deep-links from anywhere on the page --------------------- */
-  function pathwayLinks() {
-    $$('[data-open-pathway]').forEach(function (el) {
-      el.addEventListener('click', function (e) {
-        e.preventDefault();
-        openPathway(el.getAttribute('data-open-pathway'));
-      });
-    });
-  }
-
   /* --- Ambient background video ----------------------------------------- */
   function ambient() {
     var vids = $$('[data-ambient]');
@@ -470,7 +442,6 @@
     cursor();
     magnetic();
     tabs();
-    pathwayLinks();
     accordions();
     quotes();
     counters();

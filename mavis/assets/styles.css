@@ -44,6 +44,40 @@
   --ease-soft: cubic-bezier(0.4, 0, 0.2, 1);
 }
 
+/* --- Per-page grounds ---------------------------------------------------
+   Every page is the same practice, so the type, spacing and motion never
+   change. What changes is the ground you stand on, so arriving somewhere
+   new feels like arriving somewhere new. Because components only ever read
+   tokens, swapping these repaints a whole page correctly.
+   ------------------------------------------------------------------------ */
+
+/* Coaching — night. Decisive, private, a room with the lamp on. */
+body.ground-night {
+  --canvas: #17120f;
+  --canvas-2: #1e1815;
+  --canvas-3: #2c2320;
+  --ink: #f6f0e8;
+  --ink-2: #ece3d8;
+  --ink-soft: rgba(246, 240, 232, 0.74);
+  --ink-faint: rgba(246, 240, 232, 0.52);
+  --line: rgba(246, 240, 232, 0.16);
+  --line-soft: rgba(246, 240, 232, 0.08);
+  /* Clay is too dense to read on ink; lift it rather than swap it. */
+  --clay: #d98a5f;
+}
+body.ground-night .section--ink { background: #100c0a; }
+body.ground-night .section--warm { background: var(--canvas-2); }
+body.ground-night .grain { mix-blend-mode: overlay; opacity: 0.18; }
+body.ground-night .cursor { mix-blend-mode: screen; border-color: rgba(246, 240, 232, 0.5); }
+
+/* Courses — sand. Warmer and more workmanlike than the therapy pages. */
+body.ground-sand {
+  --canvas: #efe7db;
+  --canvas-2: #e6dac8;
+  --canvas-3: #dccdb5;
+  --line: rgba(23, 18, 15, 0.16);
+}
+
 /* --- Reset -------------------------------------------------------------- */
 *,
 *::before,
@@ -366,6 +400,11 @@ h1, h2, h3, h4 {
 }
 .nav a:hover, .nav a[aria-current="page"] { color: var(--ink); }
 .nav__cta { margin-left: 0.5rem; padding: 0.75rem 1.35rem; }
+/* `.nav a` outranks `.btn`, so the CTA has to reclaim the button's own
+   colours — otherwise it inherits the link colour and, on a dark ground,
+   renders cream text on a cream pill. */
+.nav a.btn { color: var(--btn-fg); }
+.nav a.btn:hover, .nav a.btn:focus-visible { color: #fff; }
 
 .menu-btn {
   display: none;
@@ -794,6 +833,35 @@ h1, h2, h3, h4 {
 .section--ink .price-card dd { color: var(--canvas); }
 
 @media (max-width: 900px) { .price-card { position: static; } }
+
+/* ==========================================================================
+   Pathway cards — one per place, each linking out to its own page
+   ========================================================================== */
+.pathways { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1px;
+  background: var(--line); border: 1px solid var(--line); }
+.pathway {
+  background: var(--canvas);
+  padding: clamp(1.6rem, 3vw, 2.4rem);
+  display: grid;
+  gap: 0.75rem;
+  align-content: start;
+  text-decoration: none;
+  transition: background-color 0.5s var(--ease-soft);
+}
+.pathway:hover { background: var(--canvas-3); }
+.pathway__label { font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--clay); }
+.pathway h3 { font-size: var(--step-2); }
+.pathway p { color: var(--ink-soft); font-size: 0.95rem; }
+.pathway__meta { font-size: 0.8rem; color: var(--ink-faint); margin-top: 0.25rem; }
+.pathway__go {
+  margin-top: 0.5rem;
+  font-size: var(--step--1);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  display: inline-flex;
+  gap: 0.5rem;
+}
+.pathway:hover .btn__arrow { transform: translateX(4px); }
 
 /* ==========================================================================
    Method (numbered steps)
