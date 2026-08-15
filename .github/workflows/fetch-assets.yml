@@ -1,0 +1,75 @@
+name: Fetch generated assets
+
+# The environment this repo is edited from cannot reach the media CDN, so the
+# download happens here instead and the results are committed back.
+# Run manually from the Actions tab; safe to re-run (it only commits changes).
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - run: sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg
+
+      - name: Download and encode
+        env:
+          BASE: https://d8j0ntlcm91z4.cloudfront.net/user_3FWUsy2D15QEon8yHY3SqwAgWVu
+        run: |
+          set -euo pipefail
+          cd mavis/assets
+
+          # Long edge capped at 1600px — nothing on the site renders larger.
+          for row in \
+            "art-opposites|hf_20260815_060524_c5afc2bd-49e4-43de-b24a-50ea4dbce1c2.png" \
+            "art-hurts|hf_20260815_060524_e513d16f-65f9-4bf1-89e7-25236f35e324.png" \
+            "texture-dark|hf_20260815_060524_f8599c40-2e75-443b-b7c6-a1e56290c75a.png" \
+            "art-linen|hf_20260815_060524_a12da8b5-e7dc-4006-b54a-aa5275676475.png" \
+            "social-autumn|hf_20260815_061624_b329b359-2354-42a4-ac0c-c28cc844d52e.png" \
+            "social-green|hf_20260815_061624_a17b3101-b66e-43a9-aa01-171579a31d4b.png" \
+            "art-notebook|hf_20260815_061624_e6c8d824-9e12-496e-b697-269c2812f7ed.png" \
+            "texture-paper|hf_20260815_061624_0a6f6db3-3a82-4a2d-a9ca-bd3f07a16c55.png" \
+          ; do
+            name="${row%%|*}"; src="${row##*|}"
+            curl -fsSL --retry 3 -o tmp.png "$BASE/$src"
+            ffmpeg -y -loglevel error -i tmp.png \
+              -vf "scale='if(gt(iw,ih),min(1600,iw),-2)':'if(gt(iw,ih),-2,min(1600,ih))'" \
+              -c:v libwebp -quality 82 "$name.webp"
+            rm -f tmp.png
+            echo "$name.webp $(du -h "$name.webp" | cut -f1)"
+          done
+
+          # Videos are muted background loops, so drop the audio track entirely.
+          for row in \
+            "hero-autumn|hf_20260815_061613_c723f2ac-8422-4833-a45d-3a9768eaa0cb.mp4" \
+            "hero-linen|hf_20260815_061613_a5ef9bec-da8c-45a4-ae5b-d4c151840f11.mp4" \
+          ; do
+            name="${row%%|*}"; src="${row##*|}"
+            curl -fsSL --retry 3 -o tmp.mp4 "$BASE/$src"
+            ffmpeg -y -loglevel error -i tmp.mp4 -an \
+              -vf "scale='min(1280,iw)':-2" \
+              -c:v libx264 -crf 28 -preset slow -movflags +faststart "$name.mp4"
+            rm -f tmp.mp4
+            echo "$name.mp4 $(du -h "$name.mp4" | cut -f1)"
+          done
+
+      - name: Commit
+        run: |
+          git config user.name "Claude"
+          git config user.email "noreply@anthropic.com"
+          git add mavis/assets
+          if git diff --cached --quiet; then
+            echo "No changes."
+          else
+            git commit -m "Add generated art, textures and hero loops
+
+          Downloaded from the generation CDN, which the editing environment
+          cannot reach, then encoded to WebP and audio-stripped H.264."
+            git push
+          fi
