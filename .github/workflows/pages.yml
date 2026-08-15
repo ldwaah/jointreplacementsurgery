@@ -1,0 +1,51 @@
+name: Deploy to GitHub Pages
+
+# Publishes the repository as-is to GitHub Pages:
+#   /        → the existing joint-replacement site (unchanged)
+#   /mavis/  → the Mpathy Therapy site
+#
+# Both are static, so there is no build step. Triggered manually, and on
+# pushes that touch the Mavis site.
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - claude/mavis-premium-website-kj9njc
+    paths:
+      - 'mavis/**'
+      - '.github/workflows/pages.yml'
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Never run two Pages deploys at once; let a newer one finish rather than
+# cancelling it half-way.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+
+      # Stop Jekyll from touching the files — this is plain HTML.
+      - run: touch .nojekyll
+
+      - uses: actions/configure-pages@v5
+        with:
+          enablement: true
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: .
+
+      - id: deployment
+        uses: actions/deploy-pages@v4
